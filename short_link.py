@@ -46,17 +46,17 @@ def is_bitlink(url, token):
 
 if __name__ == '__main__':
     load_dotenv()
-    url = input("Vvdeite link: ")
+    url = input("Введите ссылку: ")
     token = os.environ["BITTLY_TOKEN"]
     if is_bitlink(url, token):
         try:
             counts = count_clicks(token, url)
-            print(counts)
+            print('По вашей сслыки прошли: {} раз(а)'.format(counts))
         except requests.exceptions.HTTPError:
             print("Вы ввели неверный битлинк")
     else:
         try:
             bitlink = shorten_link(token, url)
-            print('Битлинк', bitlink)
+            print('Битлинк:', bitlink)
         except requests.exceptions.HTTPError:
             print("Вы ввели неправильную ссылку")
