@@ -5,14 +5,14 @@ from dotenv import load_dotenv
 
 
 def shorten_link(token, url):
-    url_shorten = "https://api-ssl.bitly.com/v4/shorten"
+    short_url = "https://api-ssl.bitly.com/v4/shorten"
     headers = {
         "Authorization": token
     }
     payload = {
         "long_url": url
     }
-    response = requests.post(url_shorten, headers=headers, json=payload)
+    response = requests.post(short_url, headers=headers, json=payload)
     response.raise_for_status()
     return response.json()['link']
 
@@ -22,10 +22,10 @@ def count_clicks(token, link):
     headers = {
         "Authorization": token
     }
-    parsed = urlparse(link)
+    parse_array = urlparse(link)
     site = 'https://api-ssl.bitly.com/v4/bitlinks/'
     summary = '/clicks/summary'
-    full_url = f"{site}{parsed.netloc}{parsed.path}{summary}"
+    full_url = f"{site}{parse_array.netloc}{parse_array.path}{summary}"
     response = requests.get(full_url, headers=headers, params=payload)
     response.raise_for_status()
     return response.json()['total_clicks']
@@ -35,23 +35,21 @@ def is_bitlink(url, token):
     headers = {
         "Authorization": token
     }
-    parsed = urlparse(url)
+    parse_array = urlparse(url)
     site = 'https://api-ssl.bitly.com/v4/bitlinks/'
-    full_url = f"{site}{parsed.netloc}{parsed.path}"
+    full_url = f"{site}{parse_array.netloc}{parse_array.path}"
     response = requests.get(full_url, headers=headers)
-    if response.ok:
-        return True
-    return False
+    return response.ok
 
 
 if __name__ == '__main__':
     load_dotenv()
     url = input("Введите ссылку: ")
-    token = os.environ["BITTLY_TOKEN"]
+    token = os.environ["BITLY_TOKEN"]
     if is_bitlink(url, token):
         try:
             counts = count_clicks(token, url)
-            print('По вашей сслыки прошли: {} раз(а)'.format(counts))
+            print('По вашей ссылки прошли: {} раз(а)'.format(counts))
         except requests.exceptions.HTTPError:
             print("Вы ввели неверный битлинк")
     else:
