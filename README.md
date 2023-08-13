@@ -11,5 +11,7 @@
 
 Для установки всех зависимостей проекта выполните:
  
-'''bash
+'''
+bash
 pip install -r requirements.txt
+'''
