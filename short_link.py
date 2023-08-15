@@ -46,8 +46,7 @@ def is_bitlink(url, token):
 
 def createParser ():
     parser = argparse.ArgumentParser(description='Программа предназначена для сокращения ссылок с использованием сервиса Bitly, а также подсчета количества переходов по сокращенной ссылке.')
-    parser.add_argument ('link')
- 
+    parser.add_argument('link')
     return parser
 
 
