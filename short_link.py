@@ -52,7 +52,6 @@ def createParser ():
 
 if __name__ == '__main__':
     load_dotenv()
-#    url = input("Введите ссылку: ")
     parser = createParser()
     args = parser.parse_args(sys.argv[1:])
     url = args.link
