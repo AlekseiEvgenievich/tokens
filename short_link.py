@@ -53,18 +53,17 @@ def createParser ():
 if __name__ == '__main__':
     load_dotenv()
     parser = createParser()
-    args = parser.parse_args(sys.argv[1:])
-    url = args.link
+    args = parser.parse_args()
     token = os.environ["BITLY_TOKEN"]
-    if is_bitlink(url, token):
+    if is_bitlink(args.link, token):
         try:
-            counts = count_clicks(token, url)
+            counts = count_clicks(token, args.link)
             print('По вашей ссылки прошли: {} раз(а)'.format(counts))
         except requests.exceptions.HTTPError:
             print("Вы ввели неверный битлинк")
     else:
         try:
-            bitlink = shorten_link(token, url)
+            bitlink = shorten_link(token, args.link)
             print('Битлинк:', bitlink)
         except requests.exceptions.HTTPError:
             print("Вы ввели неправильную ссылку")
